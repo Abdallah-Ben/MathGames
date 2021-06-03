@@ -2,9 +2,12 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
-import {HomeScreen, 
+import {HomeScreen,
+        MysteryCode
         } from './app/screens/'
-import {GameListProvider,} from './app/context/';
+import {GameListProvider,
+        MysteryCodeProvider
+        } from './app/context/';
 import {COLORS} from './app/constants/'
 
   const App = ()=> {
@@ -15,6 +18,9 @@ import {COLORS} from './app/constants/'
        <Screen name="HomeScreen" 
        options = {{title :'Games List', headerStyle : {backgroundColor :COLORS.primery}, headerTitleAlign : 'center' }} 
        component = {HomeScreen}/>
+       <Screen name="MysteryCode" 
+       options = {{title :'Mystery Code',gestureEnabled: false, headerLeft : null, headerStyle : {backgroundColor :COLORS.primery}, headerTitleAlign : 'center' }} 
+       component={MysteryCode}/>
       </Navigator>
     </NavigationContainer>
   );
@@ -22,7 +28,9 @@ import {COLORS} from './app/constants/'
 
 export default ()=>{
   return (<GameListProvider>
-            <App/>
+            <MysteryCodeProvider>
+              <App/>
+            </MysteryCodeProvider>
         </GameListProvider>)
   
 }
