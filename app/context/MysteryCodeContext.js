@@ -3,7 +3,7 @@ import {images} from '../constants/'
 
 const MysteryCodeContext = React.createContext();
 export const MysteryCodeProvider = ({children}) =>{
-    const initialVlues= [
+    const initialVlues= [ //initial attempts state
         {number : 1, value : '', correctPositions : 0, correctNumbers : 0},
         {number : 2, value : '', correctPositions : 0, correctNumbers : 0},
         {number : 3, value : '', correctPositions : 0, correctNumbers : 0},
@@ -15,7 +15,7 @@ export const MysteryCodeProvider = ({children}) =>{
         {number : 9, value : '', correctPositions : 0, correctNumbers : 0},
         {number : 10, value : '', correctPositions : 0, correctNumbers : 0},
     ]
-    const howtoPlay = [{
+    const howtoPlay = [{ // static array of the the How-To-Play cards
         title : 'Classic puzzle game',
         discription : 'The goal is to break a 4-digit code, where each  digit is different, in the fewest of guesses.',
         img : images.puzzle, 

@@ -14,7 +14,7 @@ const MysteryCode = ({navigation}) => {
             secends = secends + (table[i+1] - table[i])
                 i = i +2;  
         }
-        // the value of seconds now is in Ms
+        // the value of seconds is now in Ms
         min = Math.floor(secends/60000)
         secends = Math.floor(secends/1000) % 60 
 
@@ -39,21 +39,19 @@ const MysteryCode = ({navigation}) => {
                     text: "Don't leave", style: 'cancel', onPress: () => {}
                 },{
                     text: 'Discard',style: 'destructive', onPress: () => {clearData();navigation.dispatch(e.data.action)}
-            }]
-            )
-            }
-            },)
+            }])}},)
+
             if (!generatedCode) {
                 setGeneratedCode(useGenerator()); //generate the mystery number
                 setTimer([...timer, new Date()]); // start counting the time
             } 
             return listnerAdded;            
-        },[Boolean(attempt-1)])
-            // I used the Boolean method trick to prevent the listener from being created many times
-            // instead it will be created only once when the attempt reaches 2
+        },[Boolean(attempt-1)]) 
+        // I used the Boolean method trick to triger the useEffect using parameters only once (on the 2nd attempt)
+        // so if you did't yet start the game you won't be promted to confirm leaving the game
      return (
          <View style = {{flex : 1,}} >
-             <View style ={styles.helpExitView }>
+             <View style ={styles.helpExitView }> 
                  <Pressable onPress = {()=> navigation.navigate('HomeScreen')}>
                     <View 
                     style ={{ marginLeft : SIZES.width * 0.03, flexDirection : 'row',paddingHorizontal : '1%', borderRadius : 8,backgroundColor : COLORS.red, alignItems : 'center', justifyContent : 'center', width : SIZES.width * 0.3, height : '90%' }}>
@@ -112,11 +110,11 @@ const MysteryCode = ({navigation}) => {
                                     onPress = { ()=> {
                                         submitedValue(attempt,enteredCode, generatedCode);
                                         setAttempt(attempt + 1);
+                                        setEnteredCode('');
                                         if ((enteredCode == generatedCode) || attempt == 10) {
                                             setTimer([...timer, new Date()]);
                                             attempt == 10 ? setResult('Defeat') : setResult('Victory') ;
                                         }
-                                        setEnteredCode('');
                                         }} 
                                     style = {({ pressed }) => [{backgroundColor: pressed ? '#8DEEA6': COLORS.white},styles.enterKey]}>
                                         <AntDesign name="enter"  size={50} color={COLORS.black} />                            
@@ -131,7 +129,7 @@ const MysteryCode = ({navigation}) => {
                 setModalVisible(!modalVisible);
                 setTimer([...timer, new Date()]);
                 }}
-                >
+            >
                 <View style ={styles.howToPlayContainer}>
                 <ScrollView 
                 showsHorizontalScrollIndicator = {false}
