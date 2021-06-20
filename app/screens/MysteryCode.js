@@ -7,6 +7,7 @@ import {KeyboardKeys,Attempts} from '../components/';
 import useGenerator from '../Hooks/useGenerator'
 
 const MysteryCode = ({navigation}) => {
+
     const calculateTime = (table)=>{
         let secends = 0;
         let min;
@@ -17,7 +18,6 @@ const MysteryCode = ({navigation}) => {
         // the value of seconds is now in Ms
         min = Math.floor(secends/60000)
         secends = Math.floor(secends/1000) % 60 
-
         return ( (min) ? `${min} minuts and ${secends} seconds` : `${secends} seconds`)
     }
     const {state, howtoPlay, submitedValue, clearData} = useContext(MysteryCodeContext);
@@ -25,9 +25,9 @@ const MysteryCode = ({navigation}) => {
     const [attempt, setAttempt] = useState(1);
     const [enteredCode, setEnteredCode] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [result, setResult] = useState('');
     const [timer, setTimer] = useState([]);
-
+    const [result, setResult] = useState('');
+    console.log(generatedCode)
     useEffect(() => {
         const listnerAdded = navigation.addListener('beforeRemove', (e) => {
             if (!(attempt - 1)) {
@@ -113,7 +113,7 @@ const MysteryCode = ({navigation}) => {
                                         setEnteredCode('');
                                         if ((enteredCode == generatedCode) || attempt == 10) {
                                             setTimer([...timer, new Date()]);
-                                            attempt == 10 ? setResult('Defeat') : setResult('Victory') ;
+                                            (enteredCode == generatedCode)  ? setResult('Victory') : setResult('Defeat')   ;
                                         }
                                         }} 
                                     style = {({ pressed }) => [{backgroundColor: pressed ? '#8DEEA6': COLORS.white},styles.enterKey]}>
@@ -190,7 +190,7 @@ const MysteryCode = ({navigation}) => {
                                 {result}
                             </Text>
                             <Text style ={{textAlign : 'center'}}>
-                                {(result == 'Defeat') ? 'You lost but it\'s allright you can try again' : 
+                                {(result == 'Defeat') ? `You lost but it\'s allright you can try again, the number you were looking for was ${generatedCode}` : 
                                 `You won! Congtagulations\n It took you ${ calculateTime(timer)}` }
                             </Text>
                         </View>
